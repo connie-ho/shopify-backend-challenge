@@ -1,0 +1,9 @@
+overwrite: true
+schema: ./src/application/schema/
+generates:
+  ./src/application/schema/types/schema.d.ts:
+    plugins:
+      - typescript
+hooks:
+  afterAllFileWrite:
+    - prettier --write ./src/application/schema/types/schema.d.ts
