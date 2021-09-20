@@ -14,6 +14,15 @@ const typeDefs = gql`
   input ImagesQueryArgs {
     input: QueryInput
   }
+
+  type Mutation {
+    createImage(input: CreateImageInput): Image!
+  }
+
+  input CreateImageInput {
+    url: String!
+    tagNames: [String!]!
+  }
 `;
 
 export { typeDefs };

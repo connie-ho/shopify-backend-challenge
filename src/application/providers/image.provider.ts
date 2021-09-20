@@ -1,5 +1,5 @@
-import { Collection} from 'mongodb';
-import { ImageResult, ImagesQueryArgs } from '../schema/types/schema';
+import { Collection, ObjectId} from 'mongodb';
+import { CreateImageInput, ImageResult, ImagesQueryArgs } from '../schema/types/schema';
 import { ImageObject, toImageObject } from '../../lib/object-formatter';
 import { CursorProvider } from './cursor.provider';
 import { ImageDocument } from '../../entities/types';
@@ -13,7 +13,7 @@ class ImageProvider {
   constructor(private collection: Collection, private imageCursorProvider: CursorProvider) {}
 
   public async getImages(args: ImagesQueryArgs): Promise<ImageQueryResult> {
-    console.log(args)
+
     if (!args.input) {
       const data = (await this.collection.find().toArray()) as ImageDocument[];
 
@@ -41,6 +41,32 @@ class ImageProvider {
       results: results.map(toImageObject),
     };
   }
+
+  public async createImage(args: { input: CreateImageInput }): Promise<ImageObject> {
+    const createImageObject = {
+      ...args.input,
+      updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+    };
+
+    console.log(createImageObject)
+
+    const imageData = await this.collection.findOneAndUpdate(
+      { _id: new ObjectId() },
+      { $set: createImageObject },
+      { upsert: true, returnDocument: 'after' }
+    );
+
+    const image = imageData.value as ImageDocument;
+
+    if (!image) {
+      throw new Error(`Could not create the ${name} image`);
+    }
+
+    return toImageObject(image);
+  }
+
+
 }
 
 export { ImageProvider };

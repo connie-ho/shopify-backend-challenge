@@ -1,4 +1,4 @@
-import { Collection } from 'mongodb';
+import { Collection, ObjectId } from 'mongodb';
 
 import { TagDocument } from '../../entities/types';
 import { toTagObject } from '../../lib/object-formatter';
@@ -15,6 +15,18 @@ class TagProvider {
     const tags = data.map(tag => toTagObject(tag))
 
     return tags
+  }
+
+  public async validateTags(tagNames: string[]): Promise<void> {
+    const existingTags = await this.collection.find({ name: { $in: tagNames } }).map(tag => tag.name).toArray();
+
+    const newTags = tagNames.filter(tag => !existingTags.includes(tag));
+    const tags = newTags.map((tag: string) => ({
+      _id: new ObjectId(),
+      name: tag
+    }))
+
+    await this.collection.insertMany(tags);
   }
 }
 

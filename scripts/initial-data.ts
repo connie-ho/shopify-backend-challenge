@@ -63,7 +63,7 @@ for(let i = 0; i < tags.length; i += 5) {
   images.push({
     _id: new ObjectId(),
     url: `https://loremflickr.com/320/240/${imgTags[0]},${imgTags[1]},${imgTags[2]},${imgTags[3]},${imgTags[4]}`,
-    tags: imgTags
+    tagNames: imgTags
   })
 }
 

@@ -8,7 +8,7 @@ const toImageObject = (image: ImageDocument): ImageObject => {
   return {
     id: image._id.toHexString(),
     url: image.url,
-    tags: image.tags
+    tagNames: image.tagNames
   };
 };
 

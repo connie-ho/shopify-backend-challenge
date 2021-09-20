@@ -13,6 +13,11 @@ export type Scalars = {
   ObjectID: any;
 };
 
+export type CreateImageInput = {
+  tagNames: Array<Scalars['String']>;
+  url: Scalars['String'];
+};
+
 export type FilterInput = {
   field: Scalars['String'];
   operator?: Maybe<FilterOperator>;
@@ -56,6 +61,15 @@ export type ImageResult = {
 
 export type ImagesQueryArgs = {
   input?: Maybe<QueryInput>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createImage: Image;
+};
+
+export type MutationCreateImageArgs = {
+  input?: Maybe<CreateImageInput>;
 };
 
 export type Query = {

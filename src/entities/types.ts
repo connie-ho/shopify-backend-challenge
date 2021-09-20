@@ -3,7 +3,7 @@ import { ObjectID, Document } from "bson";
 export interface Image {
   _id: ObjectID;
   url: string;
-  tags: string[];
+  tagNames: string[];
 }
 
 export interface Tag {

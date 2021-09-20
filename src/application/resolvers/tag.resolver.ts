@@ -3,13 +3,13 @@ import { tagProvider } from '../providers';
 
 const tagResolver = {
   Image: {
-    tags: async (image: { tags: string[] }): Promise<Tag[]> => {
+    tags: async (image: { tagNames: string[] }): Promise<Tag[]> => {
 
-      if (!image.tags) {
+      if (!image.tagNames) {
         throw new Error(`Tag names required`);
       }
 
-      return tagProvider.getTagsByName(image.tags);
+      return tagProvider.getTagsByName(image.tagNames);
     },
   },
 };
