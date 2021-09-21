@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { createMockImage, createMockImages } from '../helpers/image.helper';
 import { TestClient } from '../helpers/client.helper';
 import { imageResolver } from '../../src/application/resolvers/image.resolver';
-import { imageProvider } from '../../src/application/providers';
+import { imageProvider, tagProvider } from '../../src/application/providers';
 import { typeDefs } from '../../src/application/schema/index';
 import { createMockTag } from '../helpers/tag.helper';
 
@@ -105,4 +105,45 @@ describe('imageResolver', (): void => {
       });
     });
   });
+
+  describe('createImage', () => {
+    const mutation = gql`
+      mutation createImage($createImageInput: CreateImageInput!) {
+        createImage(input: $createImageInput) {
+          id
+          url
+          tags {
+            id
+            name
+          }
+        }
+      }
+
+    `;
+    test('should create a new image', async () => {
+      jest.spyOn(imageProvider, 'createImage').mockResolvedValue(mockImage1);
+      jest.spyOn(tagProvider, 'validateTags').mockResolvedValue();
+
+      const variables = {
+        createImageInput: {
+          url: "newImage.png",
+          tagNames: ["tomato"]
+        }
+      }
+
+      const result = await client.mutate({ mutation, variables });
+      expect(result.data).toEqual({
+        createImage: {
+          __typename: 'Image',
+          id: mockImage1.id,
+          url: mockImage1.url,
+          tags: mockImage1.tags,
+        },
+      });
+
+      expect(tagProvider.validateTags).toHaveBeenCalledWith(variables.createImageInput.tagNames)
+    });
+
+  });
+
 });

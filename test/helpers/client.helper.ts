@@ -6,7 +6,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { FetchResult } from 'apollo-link';
 import { SchemaLink } from 'apollo-link-schema';
 
-import { Query } from '../../src/application/schema/types/schema';
+import { Mutation, Query } from '../../src/application/schema/types/schema';
 
 class TestClient {
   private readonly apolloClient: ApolloClient<NormalizedCacheObject>;
@@ -27,12 +27,12 @@ class TestClient {
     });
   }
 
-  // public async mutate(mutationOptions: MutationOptions<Mutation, OperationVariables>): Promise<FetchResult<Mutation>> {
-  //   return this.apolloClient.mutate<Mutation>({
-  //     fetchPolicy: 'no-cache',
-  //     ...mutationOptions,
-  //   });
-  // }
+  public async mutate(mutationOptions: MutationOptions<Mutation, OperationVariables>): Promise<FetchResult<Mutation>> {
+    return this.apolloClient.mutate<Mutation>({
+      fetchPolicy: 'no-cache',
+      ...mutationOptions,
+    });
+  }
 }
 
 export { TestClient };

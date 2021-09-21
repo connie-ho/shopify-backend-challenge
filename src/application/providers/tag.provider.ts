@@ -26,7 +26,10 @@ class TagProvider {
       name: tag
     }))
 
-    await this.collection.insertMany(tags);
+    if(newTags.length){
+      await this.collection.insertMany(tags);
+    }
+
   }
 }
 
