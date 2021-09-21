@@ -1,7 +1,7 @@
 # Shopify Challenge - Backend Image Repository
 
 ## Summary
-This application allows you to create and search for images in a database by specifying sort, filter and cursor parameters.
+This application allows you to create and search for images in a database by specifying sort, filter and cursor arguments
 
 ## Getting Started
 
