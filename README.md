@@ -17,6 +17,7 @@ This application allows you to create and search for images in a database by spe
 
 ### Notes:
 * If modifying the schema, ensure you `npm run generate:types` to update the generated schema file
+* `npm run test` will run the entire test suite
 
 # Future Work
 * Create a client to interface with the server
