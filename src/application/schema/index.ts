@@ -6,7 +6,6 @@ import { typeDefs as paginationQueryTypeDefs } from './cursor-query.schema';
 
 const scalarSchema = gql`
   scalar ObjectID
-  scalar Long
 `;
 
 const typeDefs = gql`

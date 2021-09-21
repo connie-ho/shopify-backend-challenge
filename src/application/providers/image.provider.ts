@@ -49,8 +49,6 @@ class ImageProvider {
       createdAt: new Date().toISOString(),
     };
 
-    console.log(createImageObject)
-
     const imageData = await this.collection.findOneAndUpdate(
       { _id: new ObjectId() },
       { $set: createImageObject },
